@@ -1,0 +1,47 @@
+.display {
+    font-size: 40px;
+    display: flex;
+    min-width: 40px;
+    min-height: 40px;
+    
+    background-color: aquamarine;
+    
+    }
+    
+    .clearButton {
+    
+        font-size: 20px;
+        padding: 10px; 
+    }
+    
+    body {
+        display: flex;
+        justify-content: center; 
+        
+    }
+    
+    .calcContainer {
+    
+       justify-content: center; 
+    
+    }
+    
+    .glow {
+        color: red;
+    }
+
+    .numButton {
+        font-size: 20px;
+        padding: 10px; 
+    }
+
+    .operatorButton {
+
+        padding: 10px; 
+    }
+
+    .equalSign {
+        font-size: 20px;
+        padding: 10px; 
+
+    }
