@@ -3,7 +3,6 @@ let secondNumber = null;
 let operator = null;
 
 const display = document.querySelector(".display");
-//const displayValue = "display.innerText;"
 const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton")
 const dot = document.querySelector(".dot").value;
 
@@ -17,82 +16,59 @@ function addEventListener(){
 addEventListener()
 
 
-
-
 function updateDisplay(value){
-
-    if(firstNumber == null && secondNumber == null && operator == null && !value){ // initial disyplay value
-        console.log("1.")
-        display.innerText = "0"
-          
-    };
 
     if(!isNaN(value)){
         handleNumber(value)
     }
-    
-
-     if (value != undefined && value.match(/[.]/)) { // operator or dot click
-        
-        if(firstNumber === null) {
-            firstNumber = "0";
-            addDot(value)
-        } 
-        else if (!firstNumber.includes(dot) && secondNumber == null) {
-            console.log("first dot")
-            addDot(value)
-            
-        }
-        if (secondNumber != null && !secondNumber.includes(dot)){
-            console.log("second dot")
-            addDot(value)
-        };
-    };
-
+    if (value === ".") { // operator or dot click
+         addDot(value)
+    }
     if(value != undefined && value.match(/[-+*/]/)){
         
         operator = value;
-
     }
+    if(value === "=" && firstNumber && secondNumber && operator){
 
-    if(value != undefined && value.match(/["="]/)) {
-        console.log("match=")
-        if(firstNumber && secondNumber && operator){
-        
-        firstNumber = parseFloat(firstNumber);
-        secondNumber = parseFloat(secondNumber);
-        display.innerText = operate(firstNumber, secondNumber, operator)
-        //reset
-        firstNumber = display.innerText;
-        secondNumber = null;
-        operator = null;
-            }    
-        }
-   
+        handleEqual()
+    }
+ 
 }
 
 
 
+function handleEqual() {
+
+      
+    firstNumber = parseFloat(firstNumber);
+    secondNumber = parseFloat(secondNumber);
+    display.innerText = operate(firstNumber, secondNumber, operator)
+    firstNumber = display.innerText;
+    secondNumber = null;
+    operator = null;
+        
+
+    }
 
 
-updateDisplay();
 
 
     
 function handleNumber(value){
+
     
-    if(!isNaN(value) && firstNumber == null){   // first number click
+    if(firstNumber == null){   // first number click
         console.log("2.")
         firstNumber = value;
         display.innerText = value;
     }
-    else if(!isNaN(value) && firstNumber != null && operator == null){ // add to firstnumber
+    else if(firstNumber != null && operator == null){ // add to firstnumber
         console.log("3.")   
         firstNumber += value;
         display.innerText += value;
 
 
-    } else if (!isNaN(value) && operator){ //second number
+    } else if (operator){ //second number
         
         if (secondNumber == null) {       
             console.log("4.");
@@ -100,7 +76,7 @@ function handleNumber(value){
             display.innerText = value;
         }
         
-       else if(secondNumber != null){
+       else{
             console.log("4.1")
             secondNumber += value;
             display.innerText += value;
@@ -116,7 +92,11 @@ function handleNumber(value){
 
 function addDot(dot){
 
-    if(!firstNumber.includes(dot) && secondNumber == null){
+    if(firstNumber === null) {
+        firstNumber = "0";
+        addDot(dot)
+    }
+    else if(!firstNumber.includes(dot) && secondNumber == null){
         console.log(".")
         firstNumber += dot;
         display.innerText += dot;
@@ -129,15 +109,6 @@ function addDot(dot){
 
 
 }
-
-    
-
- 
-
-
-
-
-
 
 
 function operate(firstNumber, secondNUmber, operator){
@@ -169,3 +140,11 @@ function multiply(a, b) {
 function divide(a, b) {
     return a / b;
 };
+
+
+
+ // if(firstNumber == null && secondNumber == null && operator == null && !value){ // initial disyplay value
+    //     console.log("1.")
+    //     display.innerText = "0"
+          
+    // };
