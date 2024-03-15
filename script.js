@@ -1,18 +1,31 @@
+//next thing to do:
+// divide by 0
+// prozent 
+// round results
+// display begrenzen
+// css
+
+
 let firstNumber = null;
 let secondNumber = null;
 let operator = null;
 let operationPerformed = false;
 
 const display = document.querySelector(".display");
-const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton")
-const dot = document.querySelector(".dot").value;
+const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton, .plusMinus" )
+
 const operators = document.querySelectorAll(".operatorButton")
+const plusMinusButton = document.querySelector(".plusMinus")
 
 function addEventListener(){
     for(let i = 0; i < buttons.length; i++){
         buttons[i].addEventListener("click", function(e){
-            
-            if(buttons[i].classList.contains("clearButton")){
+
+            if(buttons[i].classList.contains("plusMinus")) {
+                console.log("plusMinusButtonclicked")
+                plusMinus()
+            }
+            else if(buttons[i].classList.contains("clearButton")){
                 clear();
             }
             else{
@@ -55,7 +68,7 @@ function handleInput(value){
 
 
  function updateDisplayText(value){
-    display.innerText = value
+    display.innerText = value.toString()
  }
 
 
@@ -63,12 +76,18 @@ function handleInput(value){
 function handleEqual() {   
     firstNumber = parseFloat(firstNumber);
     secondNumber = parseFloat(secondNumber);
+
+    if(secondNumber == 0 && operator == "/"){
+        display.innerText = "ERROR";
+    } 
+    else{
     display.innerText = operate(firstNumber, secondNumber, operator)
     firstNumber = display.innerText;
     secondNumber = null;
     operator = null;
     operationPerformed = true;
- }
+    }
+}
 
 
 function handleOperator(value){
@@ -80,6 +99,7 @@ function handleOperator(value){
     }
     else{
         operator = value
+        operationPerformed = false; // to ensure that user can continue calculating with a floatting point number
         addGlow(value)
     }
 
@@ -205,8 +225,19 @@ function clear(){
 }
 
 
- // if(firstNumber == null && secondNumber == null && operator == null && !value){ // initial disyplay value
-    //     console.log("1.")
-    //     display.innerText = "0"
-          
-    // };
+function plusMinus() { // adds a minus to a number
+    
+    if(firstNumber != null && secondNumber == null){
+        firstNumber = firstNumber * (-1)
+        firstNumber = firstNumber.toString()
+        updateDisplayText(firstNumber)
+    } 
+    else if(secondNumber != null) {
+
+        secondNumber = secondNumber * (-1)
+        secondNumber = secondNumber.toString()
+        updateDisplayText(secondNumber)
+    }
+   
+}
+
