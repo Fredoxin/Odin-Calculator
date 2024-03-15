@@ -44,15 +44,8 @@ function updateDisplay(value){
     }
     if(value.match(/[-+*/]/)){
         removeGlow()
-        if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are privided. 
-            handleEqual()                            // operator becomes equal
-            operator = value;
-            addGlow(value)
-        }
-        else{
-            operator = value
-            addGlow(value)
-        }
+        handleOperator(value)
+        
     };
 
     if(value === "=" && firstNumber && secondNumber && operator){ // only allows the calculation to be done if all arguments are provided.
@@ -74,7 +67,18 @@ function handleEqual() {
  }
 
 
+function handleOperator(value){
+    if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are privided. 
+        handleEqual()                            // operator becomes equal
+        operator = value;
+        addGlow(value)
+    }
+    else{
+        operator = value
+        addGlow(value)
+    }
 
+}
 
     
 function handleNumber(value){
