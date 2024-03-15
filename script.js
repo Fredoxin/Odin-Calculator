@@ -16,7 +16,7 @@ function addEventListener(){
                 clear();
             }
             else{
-            updateDisplay(e.target.innerText)
+            handleInput(e.target.innerText)
         }
         })
     }
@@ -24,35 +24,39 @@ function addEventListener(){
 addEventListener();
 
 
-function updateDisplay(value){
+function handleInput(value){
    
     if(!isNaN(value)){
 
         handleNumber(value)
     }
-    if (value === ".") { 
+    else if (value === ".") { 
         
         if(operationPerformed){ // when user clicks . after a calculation, it will not append the ".". it will start a new calculation and add 0. to the display.
             operationPerformed = false;
             firstNumber = null,
-            updateDisplay("0")
-            updateDisplay(".");
+            handleInput("0")
+            handleInput(".");
             
         } else {
          addDot(value)
         }
     }
-    if(value.match(/[-+*/]/)){
+    else if(value.match(/[-+*/]/)){
         removeGlow()
         handleOperator(value)
         
-    };
-
-    if(value === "=" && firstNumber && secondNumber && operator){ // only allows the calculation to be done if all arguments are provided.
+    }
+    else if(value === "=" && firstNumber && secondNumber && operator){ // only allows the calculation to be done if all arguments are provided.
 
         handleEqual()
     };
  };
+
+
+ function updateDisplayText(value){
+    display.innerText = value
+ }
 
 
 
@@ -68,6 +72,7 @@ function handleEqual() {
 
 
 function handleOperator(value){
+    
     if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are privided. 
         handleEqual()                            // operator becomes equal
         operator = value;
@@ -86,7 +91,7 @@ function handleNumber(value){
     if(firstNumber == null){   // gives firstNumber a value
         
         firstNumber = value;
-        display.innerText = value;
+        updateDisplayText(value)
        
     }
     else if(firstNumber != null && operator == null){ // appends value to firstnumber
@@ -95,27 +100,27 @@ function handleNumber(value){
         if(operationPerformed){ // starts a new calc, number clicked becomes new firstNumber value. only runs when result is present.
             
             firstNumber = value;
-            display.innerText = value;
+            updateDisplayText(value)
             operationPerformed = false;
         } 
         
         else {  //add to the firstNumber if no operation was performed or operator is provided  
         firstNumber += value;   
-        display.innerText += value;
+        updateDisplayText(display.innerText + value)
         }
     } 
-    else if (operator){ //second number clicks. runs when operator is provided.
+    else if (operator){ //secondNumber clicks. runs when operator is provided.
         removeGlow();
         if (secondNumber == null) {     // gives the secondNumber a value
             
             secondNumber = value;
-            display.innerText = value;
+            updateDisplayText(value)
         }
         
        else{                            // appends to the secondNUmber value
             
             secondNumber += value;
-            display.innerText += value;
+            updateDisplayText(display.innerText + value)
         } 
         
     }
