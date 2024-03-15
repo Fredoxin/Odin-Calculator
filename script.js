@@ -11,11 +11,17 @@ const operators = document.querySelectorAll(".operatorButton")
 function addEventListener(){
     for(let i = 0; i < buttons.length; i++){
         buttons[i].addEventListener("click", function(e){
+            
+            if(buttons[i].classList.contains("clearButton")){
+                clear();
+            }
+            else{
             updateDisplay(e.target.innerText)
+        }
         })
     }
 }
-addEventListener()
+addEventListener();
 
 
 function updateDisplay(value){
@@ -177,6 +183,15 @@ function removeGlow(){
             operator.classList.remove("glow")
         }
     })
+
+}
+
+function clear(){
+    display.innerText = "0";
+    firstNumber = null;
+    secondNumber = null;
+    operator = null;
+    operationPerformed = false;
 
 }
 
