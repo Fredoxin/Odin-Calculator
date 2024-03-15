@@ -95,7 +95,7 @@ function handleNumber(value){
         }
     } 
     else if (operator){ //second number clicks. runs when operator is provided.
-       removeGlow()
+        removeGlow();
         if (secondNumber == null) {       
             
             secondNumber = value;
