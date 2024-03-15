@@ -19,14 +19,14 @@ addEventListener()
 
 
 function updateDisplay(value){
-
+   
     if(!isNaN(value)){
 
         handleNumber(value)
     }
-    if (value === ".") { // operator or dot click
+    if (value === ".") { 
         
-        if(operationPerformed){
+        if(operationPerformed){ // when user clicks . after a calculation, it will not append the ".". it will start a new calculation and add 0. to the display.
             operationPerformed = false;
             firstNumber = null,
             updateDisplay("0")
@@ -73,36 +73,36 @@ function handleEqual() {
     
 function handleNumber(value){
 
-    if(firstNumber == null){   // first number click
+    if(firstNumber == null){   // gives firstNumber a value
         
         firstNumber = value;
         display.innerText = value;
        
     }
-    else if(firstNumber != null && operator == null){ // add to firstnumber
-        console.log("second if in handle number")
+    else if(firstNumber != null && operator == null){ // appends value to firstnumber
+        
         
         if(operationPerformed){ // starts a new calc, number clicked becomes new firstNumber value. only runs when result is present.
-            console.log("inside second if in handle number")
+            
             firstNumber = value;
             display.innerText = value;
             operationPerformed = false;
         } 
         
-        else {      
+        else {  //add to the firstNumber if no operation was performed or operator is provided  
         firstNumber += value;   
         display.innerText += value;
         }
     } 
     else if (operator){ //second number clicks. runs when operator is provided.
         removeGlow();
-        if (secondNumber == null) {       
+        if (secondNumber == null) {     // gives the secondNumber a value
             
             secondNumber = value;
             display.innerText = value;
         }
         
-       else{
+       else{                            // appends to the secondNUmber value
             
             secondNumber += value;
             display.innerText += value;
@@ -115,17 +115,16 @@ function handleNumber(value){
 
 function addDot(dot){
 
-    if(firstNumber === null) {
+    if(firstNumber === null) { //adds decimal point to intial disyplay value "0"
         firstNumber = "0";
         addDot(dot)
     }
-    else if(!firstNumber.includes(dot) && secondNumber == null){
-        console.log(".")
+    else if(!firstNumber.includes(dot) && secondNumber == null && !operator){ // adds decimal point to firstNumber
         firstNumber += dot;
         display.innerText += dot;
     }
-    else if(secondNumber != null && !secondNumber.includes(dot)){
-        console.log("..")
+    else if(secondNumber != null && !secondNumber.includes(dot)){  // adds decimal point to secondNumber
+        
         secondNumber += dot;
         display.innerText += dot;
     }
@@ -134,16 +133,16 @@ function addDot(dot){
 }
 
 
-function operate(firstNumber, secondNUmber, operator){
+function operate(firstNumber, secondNumber, operator){
     
     if (operator == "+") {
-        return add(firstNumber, secondNUmber);
+        return add(firstNumber, secondNumber);
     } else if (operator == "-") {
-        return subtract(firstNumber, secondNUmber);
+        return subtract(firstNumber, secondNumber);
     } else if (operator == "*") {
-        return multiply(firstNumber, secondNUmber);
+        return multiply(firstNumber, secondNumber);
     } else if (operator == "/") {
-        return divide(firstNumber, secondNUmber);
+        return divide(firstNumber, secondNumber);
     }; 
 };
 
