@@ -1,8 +1,8 @@
 //next thing to do:
-// divide by 0
-// prozent 
-// round results
-// display begrenzen
+// divide by 0 √
+// prozent √
+// round results√
+// display √
 // css
 
 
@@ -12,7 +12,7 @@ let operator = null;
 let operationPerformed = false;
 
 const display = document.querySelector(".display");
-const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton, .plusMinus" )
+const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton, .plusMinus, .percent" )
 
 const operators = document.querySelectorAll(".operatorButton")
 const plusMinusButton = document.querySelector(".plusMinus")
@@ -22,14 +22,16 @@ function addEventListener(){
         buttons[i].addEventListener("click", function(e){
 
             if(buttons[i].classList.contains("plusMinus")) {
-                console.log("plusMinusButtonclicked")
                 plusMinus()
+            }
+            else if(buttons[i].classList.contains("percent")){
+                percent()
             }
             else if(buttons[i].classList.contains("clearButton")){
                 clear();
             }
             else{
-            handleInput(e.target.innerText)
+                handleInput(e.target.innerText)
         }
         })
     }
@@ -40,7 +42,7 @@ addEventListener();
 function handleInput(value){
    
     if(!isNaN(value)){
-
+        console.log("number")
         handleNumber(value)
     }
     else if (value === ".") { 
@@ -50,45 +52,40 @@ function handleInput(value){
             firstNumber = null,
             handleInput("0")
             handleInput(".");
-            
-        } else {
-         addDot(value)
+        } 
+        else {
+            addDot(value)
         }
     }
     else if(value.match(/[-+*/]/)){
         removeGlow()
-        handleOperator(value)
-        
+        handleOperator(value)       
     }
     else if(value === "=" && firstNumber && secondNumber && operator){ // only allows the calculation to be done if all arguments are provided.
-
         handleEqual()
     };
  };
 
-
  function updateDisplayText(value){
-    display.innerText = value.toString()
- }
-
+   display.innerText = value     // sets display text and converts the number back to a string
+ };
 
 
 function handleEqual() {   
     firstNumber = parseFloat(firstNumber);
     secondNumber = parseFloat(secondNumber);
-
+    console.log(firstNumber, secondNumber)
     if(secondNumber == 0 && operator == "/"){
         display.innerText = "ERROR";
     } 
     else{
-    display.innerText = operate(firstNumber, secondNumber, operator)
-    firstNumber = display.innerText;
+    updateDisplayText(operate(firstNumber, secondNumber, operator).toFixed(6))
+    firstNumber = display.innerText; // User can continue calculating with last result
     secondNumber = null;
     operator = null;
     operationPerformed = true;
-    }
-}
-
+    };
+};
 
 function handleOperator(value){
     
@@ -114,7 +111,7 @@ function handleNumber(value){
         updateDisplayText(value)
        
     }
-    else if(firstNumber != null && operator == null){ // appends value to firstnumber
+    else if(firstNumber != null && operator == null){ // appends value to firstnumber or starts new calculation
         
         
         if(operationPerformed){ // starts a new calc, number clicked becomes new firstNumber value. only runs when result is present.
@@ -241,3 +238,16 @@ function plusMinus() { // adds a minus to a number
    
 }
 
+function percent(){
+    if(firstNumber != null && secondNumber == null){
+        firstNumber = firstNumber / 100;
+        firstNumber = firstNumber.toString();
+        updateDisplayText(firstNumber);
+
+
+    } else if(secondNumber != null){
+        secondNumber = secondNumber / 100;
+        secondNumber = secondNumber.toString();
+        updateDisplayText(secondNumber);
+    }
+}
