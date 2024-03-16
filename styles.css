@@ -1,7 +1,7 @@
 .display {
     font-size: 40px;
     display: flex;
-    min-width: 40px;
+    min-width: max-content;
     min-height: 40px;
     
     background-color: aquamarine;
@@ -10,8 +10,7 @@
     
     .clearButton {
     
-        font-size: 20px;
-        padding: 10px; 
+        
     }
     
     body {
@@ -21,8 +20,7 @@
     }
     
     .calcContainer {
-    
-       justify-content: center; 
+        
     
     }
     
@@ -30,18 +28,9 @@
         color: red;
     }
 
-    .numButton {
+    .button {
         font-size: 20px;
         padding: 10px; 
     }
 
-    .operatorButton {
-
-        padding: 10px; 
-    }
-
-    .equalSign {
-        font-size: 20px;
-        padding: 10px; 
-
-    }
+    
