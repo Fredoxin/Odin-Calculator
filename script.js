@@ -2,7 +2,7 @@
 // divide by 0 √
 // prozent √
 // round results√
-// display √
+// display limit√
 // css
 
 
@@ -42,7 +42,7 @@ addEventListener();
 function handleInput(value){
    
     if(!isNaN(value)){
-        console.log("number")
+        
         handleNumber(value)
     }
     else if (value === ".") { 
@@ -66,24 +66,27 @@ function handleInput(value){
     };
  };
 
- function updateDisplayText(value){
-   display.innerText = value     // sets display text and converts the number back to a string
- };
+ function updateDisplayText(value){ // String - Number - String - Number - String LOL
+    value = parseFloat(value)  
+    display.innerText = parseFloat(value.toFixed(4).substring(0, 15));
+    
+};
 
 
 function handleEqual() {   
     firstNumber = parseFloat(firstNumber);
     secondNumber = parseFloat(secondNumber);
-    console.log(firstNumber, secondNumber)
+    
     if(secondNumber == 0 && operator == "/"){
         display.innerText = "ERROR";
     } 
     else{
-    updateDisplayText(operate(firstNumber, secondNumber, operator).toFixed(6))
+    operationPerformed = true;    
+    updateDisplayText(operate(firstNumber, secondNumber, operator))
     firstNumber = display.innerText; // User can continue calculating with last result
     secondNumber = null;
     operator = null;
-    operationPerformed = true;
+    
     };
 };
 
@@ -96,7 +99,7 @@ function handleOperator(value){
     }
     else{
         operator = value
-        operationPerformed = false; // to ensure that user can continue calculating with a floatting point number
+        operationPerformed = false; // to ensure that user can continue calculating with a floating point number
         addGlow(value)
     }
 
@@ -119,8 +122,7 @@ function handleNumber(value){
             firstNumber = value;
             updateDisplayText(value)
             operationPerformed = false;
-        } 
-        
+        }  
         else {  //add to the firstNumber if no operation was performed or operator is provided  
         firstNumber += value;   
         updateDisplayText(display.innerText + value)
@@ -133,15 +135,12 @@ function handleNumber(value){
             secondNumber = value;
             updateDisplayText(value)
         }
-        
-       else{                            // appends to the secondNUmber value
+        else{                            // appends to the secondNUmber value
             
             secondNumber += value;
             updateDisplayText(display.innerText + value)
-        } 
-        
+        }    
     }
-
 }    
     
 
@@ -160,8 +159,6 @@ function addDot(dot){
         secondNumber += dot;
         display.innerText += dot;
     }
-
-
 }
 
 
