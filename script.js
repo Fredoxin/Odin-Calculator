@@ -3,7 +3,8 @@
 // prozent √
 // round results√
 // display limit√
-// css
+// css √
+// make symbols and numbers glow √
 
 
 let firstNumber = null;
@@ -14,8 +15,8 @@ let operationPerformed = false;
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton, .plusMinus, .percent" )
 
-const operators = document.querySelectorAll(".operatorButton")
-const plusMinusButton = document.querySelector(".plusMinus")
+//const operators = document.querySelectorAll(".operatorButton")
+//const plusMinusButton = document.querySelector(".plusMinus")
 
 function addEventListener(){
     for(let i = 0; i < buttons.length; i++){
@@ -23,20 +24,52 @@ function addEventListener(){
 
             if(buttons[i].classList.contains("plusMinus")) {
                 plusMinus()
+                addGlow(buttons[i])
             }
             else if(buttons[i].classList.contains("percent")){
                 percent()
+                addGlow(buttons[i])
             }
             else if(buttons[i].classList.contains("clearButton")){
                 clear();
+                addGlow(buttons[i])
             }
             else{
                 handleInput(e.target.value) // handles Numbers, dots and operators
+                addGlow(buttons[i])
         }
         })
     }
 }
 addEventListener();
+
+
+function addGlow(value){
+
+    buttons.forEach(button => {
+        if(button.classList.contains("glow")){
+            button.classList.remove("glow")
+        }
+    })
+
+    if (value.classList.contains("plusMinus") || 
+        value.classList.contains("percent") || 
+        value.classList.contains("clearButton") ||
+        value.classList.contains("numButton") ||
+        value.classList.contains("equalSign")||
+        value.classList.contains("dot")){
+
+        value.style.backgroundColor = "rgba(255, 255, 255, 0.95)";
+        setTimeout(function() {
+        value.style.backgroundColor = "";
+     }, 100)
+} 
+else if(value.classList.contains("operatorButton")){
+        value.classList.add("glow")
+        }   
+}
+
+
 
 
 function handleInput(value){
@@ -58,7 +91,7 @@ function handleInput(value){
         }
     }
     else if(value.match(/[-+x/]/)){
-       // removeGlow()
+       
         handleOperator(value)       
     }
     else if(value === "=" && firstNumber && secondNumber && operator){ // only allows the calculation to be done if all arguments are provided.
@@ -66,12 +99,13 @@ function handleInput(value){
     };
  };
 
- function updateDisplayText(value){ // String - Number - String - Number - String LOL
-  //  value = parseFloat(value)  
+ function updateDisplayText(value){ 
+    value = parseFloat(value)
     if(operationPerformed){
     display.innerText = parseFloat(value.toFixed(4).substring(0, 9));
     }   
     else{
+    value = value.toString()
     display.innerText = value.substring(0, 9)
     }
 };
@@ -99,13 +133,13 @@ function handleOperator(value){
     if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are provided. 
         handleEqual()                            // operator becomes equal
         operator = value;
-        addGlow(value)
+       
     }
     else{
-        removeGlow()
+       
         operator = value
         operationPerformed = false; // to ensure that user can continue calculating with a floating point number
-        addGlow(value)
+       
     }
 
 }
@@ -134,7 +168,7 @@ function handleNumber(value){
         }
     } 
     else if (operator){ //secondNumber clicks. runs when operator is provided.
-            removeGlow();
+           
         if (secondNumber == null) {     // gives the secondNumber a value
             
             secondNumber = value;
@@ -197,26 +231,12 @@ function divide(a, b) {
     return a / b;
 };
 
-function addGlow(value){
 
-  operators.forEach(operator => {
-    if(value == operator.innerText){
-        operator.classList.add("glow")
-    }})
-}
 
-function removeGlow(){
 
-    operators.forEach(operator => {
-        if(operator.classList.contains("glow")){
-            operator.classList.remove("glow")
-        }
-    })
-
-}
 
 function clear(){
-    removeGlow()
+  
     display.innerText = "0";
     firstNumber = null;
     secondNumber = null;
