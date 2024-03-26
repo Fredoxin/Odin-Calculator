@@ -1,12 +1,3 @@
-//next thing to do:
-// divide by 0 √
-// prozent √
-// round results√
-// display limit√
-// css √
-// make symbols and numbers glow √
-
-
 let firstNumber = null;
 let secondNumber = null;
 let operator = null;
@@ -15,8 +6,6 @@ let operationPerformed = false;
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton, .plusMinus, .percent" )
 
-//const operators = document.querySelectorAll(".operatorButton")
-//const plusMinusButton = document.querySelector(".plusMinus")
 
 function addEventListener(){
     for(let i = 0; i < buttons.length; i++){
@@ -168,9 +157,9 @@ function handleNumber(value){
         }
     } 
     else if (operator){ //secondNumber clicks. runs when operator is provided.
-           
+        
         if (secondNumber == null) {     // gives the secondNumber a value
-            
+            operationPerformed = false 
             secondNumber = value;
             updateDisplayText(value)
         }
