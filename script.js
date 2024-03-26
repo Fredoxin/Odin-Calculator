@@ -31,7 +31,7 @@ function addEventListener(){
                 clear();
             }
             else{
-                handleInput(e.target.innerText)
+                handleInput(e.target.value) // handles Numbers, dots and operators
         }
         })
     }
@@ -57,8 +57,8 @@ function handleInput(value){
             addDot(value)
         }
     }
-    else if(value.match(/[-+*/]/)){
-        removeGlow()
+    else if(value.match(/[-+x/]/)){
+       // removeGlow()
         handleOperator(value)       
     }
     else if(value === "=" && firstNumber && secondNumber && operator){ // only allows the calculation to be done if all arguments are provided.
@@ -67,9 +67,13 @@ function handleInput(value){
  };
 
  function updateDisplayText(value){ // String - Number - String - Number - String LOL
-    value = parseFloat(value)  
-    display.innerText = parseFloat(value.toFixed(4).substring(0, 15));
-    
+  //  value = parseFloat(value)  
+    if(operationPerformed){
+    display.innerText = parseFloat(value.toFixed(4).substring(0, 9));
+    }   
+    else{
+    display.innerText = value.substring(0, 9)
+    }
 };
 
 
@@ -92,12 +96,13 @@ function handleEqual() {
 
 function handleOperator(value){
     
-    if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are privided. 
+    if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are provided. 
         handleEqual()                            // operator becomes equal
         operator = value;
         addGlow(value)
     }
     else{
+        removeGlow()
         operator = value
         operationPerformed = false; // to ensure that user can continue calculating with a floating point number
         addGlow(value)
@@ -129,7 +134,7 @@ function handleNumber(value){
         }
     } 
     else if (operator){ //secondNumber clicks. runs when operator is provided.
-        removeGlow();
+            removeGlow();
         if (secondNumber == null) {     // gives the secondNumber a value
             
             secondNumber = value;
@@ -168,7 +173,7 @@ function operate(firstNumber, secondNumber, operator){
         return add(firstNumber, secondNumber);
     } else if (operator == "-") {
         return subtract(firstNumber, secondNumber);
-    } else if (operator == "*") {
+    } else if (operator == "x") {
         return multiply(firstNumber, secondNumber);
     } else if (operator == "/") {
         return divide(firstNumber, secondNumber);
@@ -197,7 +202,8 @@ function addGlow(value){
   operators.forEach(operator => {
     if(value == operator.innerText){
         operator.classList.add("glow")
-    }})}
+    }})
+}
 
 function removeGlow(){
 
@@ -210,6 +216,7 @@ function removeGlow(){
 }
 
 function clear(){
+    removeGlow()
     display.innerText = "0";
     firstNumber = null;
     secondNumber = null;
