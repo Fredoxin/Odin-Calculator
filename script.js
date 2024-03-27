@@ -1,3 +1,5 @@
+
+
 let firstNumber = null;
 let secondNumber = null;
 let operator = null;
@@ -58,9 +60,6 @@ else if(value.classList.contains("operatorButton")){
         }   
 }
 
-
-
-
 function handleInput(value){
    
     if(!isNaN(value)){
@@ -88,14 +87,26 @@ function handleInput(value){
     };
  };
 
+
+ 
  function updateDisplayText(value){ 
-    value = parseFloat(value)
+    
     if(operationPerformed){
-    display.innerText = parseFloat(value.toFixed(4).substring(0, 9));
+
+    value = parseFloat(value)
+    display.innerText = parseFloat(value.toFixed(4).substring(0, 12));
+    formatDisyplay()
     }   
     else{
-    value = value.toString()
-    display.innerText = value.substring(0, 9)
+        console.log("run else")
+    
+    display.innerText = firstNumber.substring(0, 12)
+    formatDisyplay()                                            // had to change value to firstNumber because display.innerText = value.substring(0, 9) would not allow me to enter 0
+        if(operator){                                           // after a decimal point
+                                                                // had to add this if statement for secondnumbers 
+            display.innerText = secondNumber.substring(0, 12)
+            formatDisyplay()                                     
+        }
     }
 };
 
@@ -151,7 +162,8 @@ function handleNumber(value){
             updateDisplayText(value)
             operationPerformed = false;
         }  
-        else {  //add to the firstNumber if no operation was performed or operator is provided  
+        else {  //add to the firstNumber if no operation was performed or operator is provided
+            
         firstNumber += value;   
         updateDisplayText(display.innerText + value)
         }
@@ -220,12 +232,8 @@ function divide(a, b) {
     return a / b;
 };
 
-
-
-
-
 function clear(){
-  
+    display.style.fontSize = "90px"
     display.innerText = "0";
     firstNumber = null;
     secondNumber = null;
@@ -233,7 +241,6 @@ function clear(){
     operationPerformed = false;
 
 }
-
 
 function plusMinus() { // adds a minus to a number
     
@@ -262,5 +269,15 @@ function percent(){
         secondNumber = secondNumber / 100;
         secondNumber = secondNumber.toString();
         updateDisplayText(secondNumber);
+    }
+}
+
+
+function formatDisyplay(){
+    if(display.innerText.length > 8){
+        display.style.fontSize = "60px";
+
+    } else {
+        display.style.fontSize = "90px"
     }
 }
