@@ -1,5 +1,3 @@
-
-
 .display {
     display: flex;
     justify-content: end;
@@ -51,9 +49,8 @@ body {
  }
 
  .button0 {
-    justify-content: center;
-    align-content: center;
-    width: 190px;
+    
+    width: 196px;
     height: 80px;
     padding-left: 30px; 
     margin: 5px;
@@ -105,3 +102,30 @@ body {
     transition-duration: 500ms;  
 }
 
+
+
+@media(max-width: 409px){
+
+    .button { 
+    
+        width: 10%;
+        height: 10%;
+        font-size: 5%;
+        font-weight: 100;
+        padding: 1%; 
+        margin: 5px;
+        border-radius: 50%; 
+     }
+    
+     .button0 {
+        
+        width: 20%;
+        height: 12%;
+        padding-left: 3%; 
+        margin: 1%;
+        border-radius: 50px;
+        text-align: left;   
+    }
+
+
+}
