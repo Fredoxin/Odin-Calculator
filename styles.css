@@ -108,24 +108,45 @@ body {
 
     .button { 
     
-        width: 10%;
-        height: 10%;
-        font-size: 5%;
+        max-width: 45px;
+        max-height: 45px;
+        font-size: 20px;
         font-weight: 100;
-        padding: 1%; 
-        margin: 5px;
+        padding:2.5px; 
+        margin: 2.5px;
         border-radius: 50%; 
      }
     
      .button0 {
         
-        width: 20%;
-        height: 12%;
-        padding-left: 3%; 
-        margin: 1%;
+        width: 98px;
+        height: 40px;
+        padding-left: 15px; 
+        margin: 2.5px;
         border-radius: 50px;
         text-align: left;   
     }
+
+
+    .display {
+        display: flex;
+        justify-content: end;
+        align-items: end;
+        height: 70px;
+        padding-right: 12.5px;
+        padding-left: 7.5px;
+        font-size: 45px;
+        font-weight: 100;
+        color: white;
+        background-color: black;
+        }
+
+        .calcContainer {
+    
+            border: none;
+            height: 80vh;
+            width: fit-content;    
+        }
 
 
 }
