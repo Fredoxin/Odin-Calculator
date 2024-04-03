@@ -96,8 +96,9 @@ function handleInput(value){
     // clearButtonText()
     if(operationPerformed){
 
-   // value = parseFloat(value) //not needed? thoug I need it to use toFixed()
-    display.innerText = parseFloat(value.toFixed(4).substring(0, 12))
+   
+    display.innerText = parseFloat(value.toFixed(4).substring(0, 9))               // add mechanism that shows exponent numbers
+    // display.innerText = Number(value).toExponential(6).substring(0, 9);          // add mechanism that ignores "." when substring(0,9)    
     //formatDisyplay()
     }   
     else{
@@ -184,11 +185,11 @@ function addDot(dot){
         firstNumber = "0";
         addDot(dot)
     }
-    else if(!firstNumber.includes(dot) && secondNumber == null && !operator){ // adds decimal point to firstNumber
+    else if(!firstNumber.includes(dot) && secondNumber == null && !operator && display.innerText.length < 8){ // adds decimal point to firstNumber
         firstNumber += dot;
         display.innerText += dot;
     }
-    else if(secondNumber != null && !secondNumber.includes(dot)){  // adds decimal point to secondNumber
+    else if(secondNumber != null && !secondNumber.includes(dot) && display.innerText.length < 8){  // adds decimal point to secondNumber
         
         secondNumber += dot;
         display.innerText += dot;
@@ -227,10 +228,8 @@ function divide(a, b) {
 };
 
 function clear(){
-    
-   // display.style.fontSize = "90px"
+     
     display.innerText = "0";
-   // clearButtonText()
     firstNumber = null;
     secondNumber = null;
     operator = null;
