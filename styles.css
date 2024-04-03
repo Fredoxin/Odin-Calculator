@@ -2,10 +2,10 @@
     display: flex;
     justify-content: end;
     align-items: end;
-    height: 140px;
-    padding-right: 25px;
-    padding-left: 15px;
-    font-size: 90px;
+    height: 12vh;
+    padding-right: 2.5vw;
+    padding-left: 1.5vw;
+    font-size: 80px;
     font-weight: 100;
     color: white;
     background-color: black;
@@ -14,8 +14,7 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
+    align-items: center; 
     height: 100vh; 
     width: 100vw; 
     margin: 0;
@@ -26,7 +25,8 @@ body {
     
     border: none;
     height: fit-content;
-    width: fit-content;    
+    width: fit-content;
+      
 }
     
 .buttonContainer {
@@ -38,30 +38,42 @@ body {
 }
    
 .button { 
-    
-    width: 90px;
-    height: 90px;
-    font-size: 40px;
+    min-height: 70px;
+    min-width: 70px;
+    max-width: 90px;
+    max-height: 90px;
+    width: 10vw;
+    height: 10vw;
+    font-size: 3vw;
     font-weight: 100;
-    padding: 5px; 
+    padding: 0px; 
     margin: 5px;
     border-radius: 50%; 
  }
 
  .button0 {
-    
-    width: 196px;
-    height: 80px;
-    padding-left: 30px; 
-    margin: 5px;
+    font-size: 3vw;
+    width: 20vw;
+    height: 10vw;
+    min-height: 70px;
+    min-width: 150px;
+    max-width: 192px;
+    max-height: 90px;
+    padding: 1vw 1vw 1vw 10%; 
+    margin: 1% 2% 1% 1%;
     border-radius: 50px;
     text-align: left;   
 }
 
+/* .container0{
+
+    width: fit-content;
+} */
+
 .operatorPad {   
     display: flex;
     flex-direction: column;
-    margin-left: 0px;
+    
     }
 
 .operatorButton {
@@ -83,9 +95,13 @@ body {
 }
 
 .dot {
+    position: relative;
+    bottom: 0;
+    right: 0;
     border: none;
     background-color: rgb(56,56,56);
-    color: whitesmoke;  
+    color: whitesmoke;
+     
 }
 
 .clearButton, 
@@ -102,40 +118,69 @@ body {
     transition-duration: 500ms;  
 }
 
+ @media(width > 1200px){
+    .display {
+        display: flex;
+        justify-content: end;
+        align-items: end;
+        
+        padding-right: 25px;
+        padding-left: 15px;
+        font-size: 85px;
+        font-weight: 100;
+        color: white;
+        background-color: black;
+        }
 
+        .button { 
+    
+            
+            font-size: 40px;
+            font-weight: 100;
+            /* padding: 5px;  */
+            margin: 5px;
+            border-radius: 50%; 
+         }
+        
+         .button0 {
+            font-size: 40px;
+            padding: 5px 5px 5px 30px; 
+            margin: 5px;
+            border-radius: 50px;
+            text-align: left;   
+        }
 
-@media(max-width: 409px){
+}
+
+     @media(width < 700px){
+
+     
 
     .button { 
     
-        max-width: 45px;
-        max-height: 45px;
-        font-size: 20px;
-        font-weight: 100;
-        padding:2.5px; 
-        margin: 2.5px;
-        border-radius: 50%; 
-     }
-    
-     .button0 {
+        margin: 3px 3px 3px 3px;
+        font-size: 25px;
         
-        width: 98px;
-        height: 40px;
-        padding-left: 15px; 
-        margin: 2.5px;
-        border-radius: 50px;
-        text-align: left;   
+     }
+     .button0 {
+        font-size: 25px;
+        margin: 3px 3px 3px 3px;
     }
+
+    /* .dot {
+
+        margin-left: auto;
+    } */
 
 
     .display {
         display: flex;
         justify-content: end;
         align-items: end;
-        height: 70px;
+        height: 10vh;
         padding-right: 12.5px;
         padding-left: 7.5px;
-        font-size: 45px;
+        font-size: 65px;
         font-weight: 100;
         color: white;
         background-color: black;
@@ -143,10 +188,11 @@ body {
 
         .calcContainer {
     
-            border: none;
-            height: 80vh;
-            width: fit-content;    
+            max-height: 467.8px;    
         }
 
 
-}
+}  
+   
+
+/* make media wuery that sets maximum font size */

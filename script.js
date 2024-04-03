@@ -1,5 +1,3 @@
-
-
 let firstNumber = null;
 let secondNumber = null;
 let operator = null;
@@ -7,9 +5,11 @@ let operationPerformed = false;
 
 const display = document.querySelector(".display");
 const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .equalSign, .clearButton, .plusMinus, .percent" )
+const clearButton = document.querySelector(".clearButton")
 
 
 function addEventListener(){
+
     for(let i = 0; i < buttons.length; i++){
         buttons[i].addEventListener("click", function(e){
 
@@ -23,10 +23,13 @@ function addEventListener(){
             }
             else if(buttons[i].classList.contains("clearButton")){
                 clear();
+                clearButtonText()
                 addGlow(buttons[i])
             }
             else{
+
                 handleInput(e.target.value) // handles Numbers, dots and operators
+                clearButtonText()
                 addGlow(buttons[i])
         }
         })
@@ -90,22 +93,20 @@ function handleInput(value){
 
  
  function updateDisplayText(value){ 
-    
+    // clearButtonText()
     if(operationPerformed){
 
-    value = parseFloat(value)
-    display.innerText = parseFloat(value.toFixed(4).substring(0, 12));
-    formatDisyplay()
+   // value = parseFloat(value) //not needed? thoug I need it to use toFixed()
+    display.innerText = parseFloat(value.toFixed(4).substring(0, 12))
+    //formatDisyplay()
     }   
     else{
-        console.log("run else")
-    
-    display.innerText = firstNumber.substring(0, 12)
-    formatDisyplay()                                            // had to change value to firstNumber because display.innerText = value.substring(0, 9) would not allow me to enter 0
+    display.innerText = firstNumber.substring(0, 9)
+   // formatDisyplay()                                            // had to change value to firstNumber because display.innerText = value.substring(0, 9) would not allow me to enter 0
         if(operator){                                           // after a decimal point
                                                                 // had to add this if statement for secondnumbers 
-            display.innerText = secondNumber.substring(0, 12)
-            formatDisyplay()                                     
+            display.innerText = secondNumber.substring(0, 9)
+            //formatDisyplay()                                     
         }
     }
 };
@@ -123,8 +124,7 @@ function handleEqual() {
     updateDisplayText(operate(firstNumber, secondNumber, operator))
     firstNumber = display.innerText; // User can continue calculating with last result
     secondNumber = null;
-    operator = null;
-    
+    operator = null;  
     };
 };
 
@@ -132,19 +132,14 @@ function handleOperator(value){
     
     if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are provided. 
         handleEqual()                            // operator becomes equal
-        operator = value;
-       
+        operator = value;  
     }
-    else{
-       
+    else{ 
         operator = value
-        operationPerformed = false; // to ensure that user can continue calculating with a floating point number
-       
+        operationPerformed = false; // to ensure that user can continue calculating with a floating point number  
     }
-
 }
-
-    
+   
 function handleNumber(value){
 
     if(firstNumber == null){   // gives firstNumber a value
@@ -183,7 +178,6 @@ function handleNumber(value){
     }
 }    
     
-
 function addDot(dot){
 
     if(firstNumber === null) { //adds decimal point to intial disyplay value "0"
@@ -233,8 +227,10 @@ function divide(a, b) {
 };
 
 function clear(){
-    display.style.fontSize = "90px"
+    
+   // display.style.fontSize = "90px"
     display.innerText = "0";
+   // clearButtonText()
     firstNumber = null;
     secondNumber = null;
     operator = null;
@@ -273,11 +269,25 @@ function percent(){
 }
 
 
-function formatDisyplay(){
-    if(display.innerText.length > 8){
-        display.style.fontSize = "60px";
+// function formatDisyplay(){
+    
 
-    } else {
-        display.style.fontSize = "90px"
+
+//     if(display.innerText.length > 8){
+//         display.style.fontSize = "45px";
+
+//     } else {
+//         display.style.fontSize = "90px"
+//     }
+// }
+
+function clearButtonText() {
+    if(display.innerText !== "0") {
+        clearButton.innerText = "C";
+    } else if(display.innerText == "0" && operationPerformed == false) {
+
+        clearButton.innerText = "AC";
     }
 }
+
+
