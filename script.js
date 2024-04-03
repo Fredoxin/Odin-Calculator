@@ -8,7 +8,7 @@ const buttons = document.querySelectorAll(".numButton, .operatorButton, .dot, .e
 const clearButton = document.querySelector(".clearButton")
 
 
-function addEventListener(){
+function buttonClick(){
 
     for(let i = 0; i < buttons.length; i++){
         buttons[i].addEventListener("click", function(e){
@@ -27,7 +27,6 @@ function addEventListener(){
                 addGlow(buttons[i])
             }
             else{
-
                 handleInput(e.target.value) // handles Numbers, dots and operators
                 clearButtonText()
                 addGlow(buttons[i])
@@ -35,7 +34,7 @@ function addEventListener(){
         })
     }
 }
-addEventListener();
+    buttonClick();
 
 
 function addGlow(value){
@@ -66,9 +65,10 @@ else if(value.classList.contains("operatorButton")){
 function handleInput(value){
    
     if(!isNaN(value)){
-        
+         
         handleNumber(value)
     }
+
     else if (value === ".") { 
         
         if(operationPerformed){ // when user clicks . after a calculation, it will not append the ".". it will start a new calculation and add 0. to the display.
@@ -93,19 +93,26 @@ function handleInput(value){
 
  
  function updateDisplayText(value){ 
-    // clearButtonText()
+    value = value.toString() // so I can check the length of the value
+    
+    if(value.length > 9) { // checking length of value
+        
+        alert("This is a 9 digit calculator. The result has been truncanated") 
+    }
+    
     if(operationPerformed){
+        value = parseFloat(value); // in order to use toFixed on value.
+        display.innerText = parseFloat(value.toFixed(4).substring(0, 9))               // add mechanism that shows exponent numbers
+        // display.innerText = Number(value).toExponential(6).substring(0, 9);          // add mechanism that ignores "." when substring(0,9)    
+        //formatDisyplay()
+    }  
 
-   
-    display.innerText = parseFloat(value.toFixed(4).substring(0, 9))               // add mechanism that shows exponent numbers
-    // display.innerText = Number(value).toExponential(6).substring(0, 9);          // add mechanism that ignores "." when substring(0,9)    
-    //formatDisyplay()
-    }   
     else{
-    display.innerText = firstNumber.substring(0, 9)
-   // formatDisyplay()                                            // had to change value to firstNumber because display.innerText = value.substring(0, 9) would not allow me to enter 0
-        if(operator){                                           // after a decimal point
-                                                                // had to add this if statement for secondnumbers 
+        display.innerText = firstNumber.substring(0, 9)  // had to change value to firstNumber because display.innerText = value.substring(0, 9) would not allow me to enter 0
+   // formatDisyplay()                                    // after a decimal point          
+        
+   if(operator){                                           // had to add this if statement for secondnumbers      
+                                                                
             display.innerText = secondNumber.substring(0, 9)
             //formatDisyplay()                                     
         }
@@ -136,8 +143,9 @@ function handleOperator(value){
         operator = value;  
     }
     else{ 
+
         operator = value
-        operationPerformed = false; // to ensure that user can continue calculating with a floating point number  
+        operationPerformed = false; 
     }
 }
    
@@ -159,22 +167,36 @@ function handleNumber(value){
             operationPerformed = false;
         }  
         else {  //add to the firstNumber if no operation was performed or operator is provided
-            
-        firstNumber += value;   
-        updateDisplayText(display.innerText + value)
+           if(firstNumber.length == 9){
+            alert("max 9 digits allowed")
+            return
+           } 
+
+           else {
+            firstNumber += value;   
+            updateDisplayText(display.innerText + value)
+           }
+        
         }
     } 
     else if (operator){ //secondNumber clicks. runs when operator is provided.
         
         if (secondNumber == null) {     // gives the secondNumber a value
-            operationPerformed = false 
+            operationPerformed = false; 
             secondNumber = value;
             updateDisplayText(value)
         }
         else{                            // appends to the secondNUmber value
             
+            if(secondNumber.length == 9){
+                alert("max 9 digits allowed")
+                return;  
+            } 
+            
+            else{
             secondNumber += value;
             updateDisplayText(display.innerText + value)
+            }
         }    
     }
 }    
@@ -183,7 +205,7 @@ function addDot(dot){
 
     if(firstNumber === null) { //adds decimal point to intial disyplay value "0"
         firstNumber = "0";
-        addDot(dot)
+        addDot(dot);
     }
     else if(!firstNumber.includes(dot) && secondNumber == null && !operator && display.innerText.length < 8){ // adds decimal point to firstNumber
         firstNumber += dot;
@@ -245,7 +267,6 @@ function plusMinus() { // adds a minus to a number
         updateDisplayText(firstNumber)
     } 
     else if(secondNumber != null) {
-
         secondNumber = secondNumber * (-1)
         secondNumber = secondNumber.toString()
         updateDisplayText(secondNumber)
@@ -254,6 +275,7 @@ function plusMinus() { // adds a minus to a number
 }
 
 function percent(){
+
     if(firstNumber != null && secondNumber == null){
         firstNumber = firstNumber / 100;
         firstNumber = firstNumber.toString();
@@ -269,8 +291,6 @@ function percent(){
 
 
 // function formatDisyplay(){
-    
-
 
 //     if(display.innerText.length > 8){
 //         display.style.fontSize = "45px";
@@ -283,8 +303,8 @@ function percent(){
 function clearButtonText() {
     if(display.innerText !== "0") {
         clearButton.innerText = "C";
-    } else if(display.innerText == "0" && operationPerformed == false) {
-
+    } 
+    else if(display.innerText == "0" && operationPerformed == false) {
         clearButton.innerText = "AC";
     }
 }
