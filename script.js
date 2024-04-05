@@ -1,3 +1,8 @@
+// add keyboard support
+//set display text size dynamically
+// find out how you can use flex and still stop it from wrapping. nowrap doesnt work.
+
+
 let firstNumber = null;
 let secondNumber = null;
 let operator = null;
@@ -27,7 +32,8 @@ function buttonClick(){
                 addGlow(buttons[i])
             }
             else{
-                handleInput(e.target.value) // handles Numbers, dots and operators
+                handleInput(e.target.value) // handles Numbers, dots, equal and operators, 
+                
                 clearButtonText()
                 addGlow(buttons[i])
         }
@@ -35,6 +41,32 @@ function buttonClick(){
     }
 }
     buttonClick();
+
+
+function keyBoardSupport(){
+    document.addEventListener("keydown", function(e){
+
+        const keyPressed = e.key
+        const button = document.querySelector(`button[value = "${e.key}"]`) 
+        
+        if(button && button.matches(".numButton, .operatorButton, .dot, .equalSign, .clearButton, .plusMinus, .percent")){
+            handleInput(keyPressed)
+            addGlow(button)
+        } 
+
+        if (keyPressed == "Escape"){
+            clear();
+        } else if(keyPressed == "%"){
+            percent();
+        } else if (keyPressed == "±"){   
+            plusMinus()
+
+        }
+})
+}
+
+keyBoardSupport()
+
 
 
 function addGlow(value){
@@ -56,16 +88,19 @@ function addGlow(value){
         setTimeout(function() {
         value.style.backgroundColor = "";
      }, 100)
-} 
-else if(value.classList.contains("operatorButton")){
+    } 
+    else if(value.classList.contains("operatorButton")){
         value.classList.add("glow")
-        }   
+        }
+    
+    
+        
 }
 
 function handleInput(value){
-   
+   console.log(value + "keyboard")
     if(!isNaN(value)){
-         
+
         handleNumber(value)
     }
 
@@ -82,7 +117,7 @@ function handleInput(value){
         }
     }
     else if(value.match(/[-+x/]/)){
-       
+        console.log(value + "keyboard")
         handleOperator(value)       
     }
     else if(value === "=" && firstNumber && secondNumber && operator){ // only allows the calculation to be done if all arguments are provided.
@@ -111,7 +146,7 @@ function handleInput(value){
         display.innerText = firstNumber.substring(0, 9)  // had to change value to firstNumber because display.innerText = value.substring(0, 9) would not allow me to enter 0
    // formatDisyplay()                                    // after a decimal point          
         
-   if(operator){                                           // had to add this if statement for secondnumbers      
+        if(operator){                                           // had to add this if statement for secondnumbers      
                                                                 
             display.innerText = secondNumber.substring(0, 9)
             //formatDisyplay()                                     
@@ -136,6 +171,7 @@ function handleEqual() {
     };
 };
 
+
 function handleOperator(value){
     
     if(firstNumber && secondNumber && operator){ // handles operator click when firstNumber, secondNumber and operator are provided. 
@@ -143,12 +179,12 @@ function handleOperator(value){
         operator = value;  
     }
     else{ 
-
         operator = value
         operationPerformed = false; 
     }
 }
-   
+ 
+
 function handleNumber(value){
 
     if(firstNumber == null){   // gives firstNumber a value
@@ -308,5 +344,4 @@ function clearButtonText() {
         clearButton.innerText = "AC";
     }
 }
-
 
